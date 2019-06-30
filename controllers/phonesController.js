@@ -22,7 +22,7 @@ exports.show = (req, res) => {
   .then(phone => {
     res.render('phones/show', {
     phone: phone,
-    title: phone.title
+    title: phone.model
     });
   })
   .catch(err => {

@@ -22,7 +22,7 @@ exports.show = (req, res) => {
   .then(monitor => {
     res.render('monitors/show', {
     monitor: monitor,
-    title: monitor.title
+    title: monitor.model
     });
   })
   .catch(err => {
