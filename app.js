@@ -50,16 +50,14 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// Our Views
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-app.use('/css', express.static('assets/stylesheets'));
-app.use('/js', express.static('assets/javascripts'));
-app.use('/images', express.static('assets/images'));
-
 // Our routes
-const routes = require('./routes.js');
-app.use('/', routes);
+const routes = require("./routes.js");
+app.use("/api", routes);
+
+// Handles any requests that don't match the ones above 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/public/index.html"));
+});
 
 // Starting our server on port 4000
 app.listen((process.env.PORT || 4000), () => console.log('Listening on 4000'));

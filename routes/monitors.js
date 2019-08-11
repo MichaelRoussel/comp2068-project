@@ -5,7 +5,6 @@ const MonitorsController = require('../controllers/monitorsController');
 // Begin routes
 
 router.get('/', MonitorsController.index);
-router.get('/new', MonitorsController.new);
 router.get('/:id', MonitorsController.show);
 router.get('/:id/edit', MonitorsController.edit);
 router.post('/', MonitorsController.create);

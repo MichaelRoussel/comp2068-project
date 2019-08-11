@@ -1,96 +1,57 @@
-const Phone = require('../models/phone');
-const mongoose = require('mongoose');
+const Phone = require("../models/phone");
 
 exports.index = (req, res) => {
-    Phone.find()
-      .then(phones => {
-        res.render('phones/index', {
-          phones: phones,
-          title: 'All Phones'
-        });
-      })
-      .catch(err => {
-        res.redirect('/');
-        req.flash('error', `ERROR: ${err}`);
-      });
+  Phone.find()
+    .then(phones => res.json(phones))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.show = (req, res) => {
   Phone.findOne({
-    _id: req.params.id,
+    _id: req.params.id
   })
-  .then(phone => {
-    res.render('phones/show', {
-    phone: phone,
-    title: phone.model
-    });
-  })
-  .catch(err => {
-    res.redirect('/');
-    req.flash('error', `ERROR: ${err}`);
-  });
-};
-
-exports.new = (req, res) => {
-  res.render('phones/new', {
-    title: 'New Phone Entry'
-  });
-};
-
-exports.edit = (req, res) => {
-  Phone.findOne({
-      _id: req.params.id,
-    })
-    .then(phone => {
-      res.render('phones/edit', {
-        phone: phone,
-        title: phone.model
-      });
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect('/');
-    });
+    .then(phone => res.json(phone))
+    .catch(err => res.status(401).send(err));
 };
 
 exports.create = (req, res) => {
   Phone.create(req.body.phone)
-    .then(() => {
-      req.flash('success', 'The phone was added successfully.');
-      res.redirect('/phones');
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect('/phones/new');
-    });
+    .then(() =>
+      res.status(201).send({ success: "Phone was successfully created" })
+    )
+    .catch(err => res.status(400).send(err));
+};
+
+exports.edit = (req, res) => {
+  Phone.findOne({
+    _id: req.params.id,
+  })
+    .then(phone => res.json(phone))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.update = (req, res) => {
-  Phone.updateOne({
+  Phone.updateOne(
+    {
       _id: req.body.id,
-    }, req.body.phone, {
+    },
+    req.body.phone,
+    {
       runValidators: true
-    })
-    .then(() => {
-      req.flash('success', 'The phone was updated successfully.');
-      res.redirect(`/phones/${req.body.id}`);
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect(`/phones/${req.body.id}/edit`);
-    });
+    }
+  )
+    .then(() =>
+      res.status(202).send({ success: "Your phone was successfully updated" })
+    )
+    .catch(err => res.status(400).send(err));
 };
 
 exports.destroy = (req, res) => {
   Phone.deleteOne({
-      _id: req.body.id,
-    })
-    .then(() => {
-      req.flash('success', 'The phone was deleted successfully.');
-      res.redirect('/phones');
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect(`/phones`);
-    });
+    _id: req.body.id,
+  })
+    .then(() =>
+      res.status(202).send({ success: "Your phone was successfully destroyed" })
+    )
+    .catch(err => res.status(400).send(err));
 };

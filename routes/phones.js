@@ -5,7 +5,6 @@ const PhonesController = require('../controllers/phonesController');
 // Begin routes
 
 router.get('/', PhonesController.index);
-router.get('/new', PhonesController.new);
 router.get('/:id', PhonesController.show);
 router.get('/:id/edit', PhonesController.edit);
 router.post('/', PhonesController.create);

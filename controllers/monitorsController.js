@@ -1,96 +1,57 @@
-const Monitor = require('../models/monitor');
-const mongoose = require('mongoose');
+const Monitor = require("../models/monitor");
 
 exports.index = (req, res) => {
-    Monitor.find()
-      .then(monitors => {
-        res.render('monitors/index', {
-          monitors: monitors,
-          title: 'All Monitors'
-        });
-      })
-      .catch(err => {
-        res.redirect('/');
-        req.flash('error', `ERROR: ${err}`);
-      });
+  Monitor.find()
+    .then(monitors => res.json(monitors))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.show = (req, res) => {
   Monitor.findOne({
-    _id: req.params.id,
+    _id: req.params.id
   })
-  .then(monitor => {
-    res.render('monitors/show', {
-    monitor: monitor,
-    title: monitor.model
-    });
-  })
-  .catch(err => {
-    res.redirect('/');
-    req.flash('error', `ERROR: ${err}`);
-  });
-};
-
-exports.new = (req, res) => {
-  res.render('monitors/new', {
-    title: 'New Monitor Entry'
-  });
-};
-
-exports.edit = (req, res) => {
-  Monitor.findOne({
-      _id: req.params.id,
-    })
-    .then(monitor => {
-      res.render('monitors/edit', {
-        monitor: monitor,
-        title: monitor.model
-      });
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect('/');
-    });
+    .then(monitor => res.json(monitor))
+    .catch(err => res.status(401).send(err));
 };
 
 exports.create = (req, res) => {
   Monitor.create(req.body.monitor)
-    .then(() => {
-      req.flash('success', 'The monitor was added successfully.');
-      res.redirect('/monitors');
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect('/monitors/new');
-    });
+    .then(() =>
+      res.status(201).send({ success: "Monitor was successfully created" })
+    )
+    .catch(err => res.status(400).send(err));
+};
+
+exports.edit = (req, res) => {
+  Monitor.findOne({
+    _id: req.params.id,
+  })
+    .then(monitor => res.json(monitor))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.update = (req, res) => {
-  Monitor.updateOne({
+  Monitor.updateOne(
+    {
       _id: req.body.id,
-    }, req.body.monitor, {
+    },
+    req.body.monitor,
+    {
       runValidators: true
-    })
-    .then(() => {
-      req.flash('success', 'The monitor was updated successfully.');
-      res.redirect(`/monitors/${req.body.id}`);
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect(`/monitors/${req.body.id}/edit`);
-    });
+    }
+  )
+    .then(() =>
+      res.status(202).send({ success: "Your monitor was successfully updated" })
+    )
+    .catch(err => res.status(400).send(err));
 };
 
 exports.destroy = (req, res) => {
   Monitor.deleteOne({
-      _id: req.body.id,
-    })
-    .then(() => {
-      req.flash('success', 'The monitor was deleted successfully.');
-      res.redirect('/monitors');
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect(`/monitors`);
-    });
+    _id: req.body.id,
+  })
+    .then(() =>
+      res.status(202).send({ success: "Your monitor was successfully destroyed" })
+    )
+    .catch(err => res.status(400).send(err));
 };
