@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const dropdownStyle = {
-  .dropdown:hover .dropdown-menu {
-  display: block;
-}}
-
 function MainNav() {
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -75,7 +70,7 @@ function MainNav() {
               Monitors
             </a>
 
-            <div className="dropdown-menu" style=>
+            <div className="dropdown-menu">
               <Link className="dropdown-item" to="/monitors">
                 All Monitors
               </Link>
