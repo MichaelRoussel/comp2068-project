@@ -93,11 +93,11 @@ function New() {
               required="required"
               onChange={handleInputChange}
             >
-              <option value="1920x1080">1920x1080</option>
-              <option value="2560x1080">2560x1080</option>
-              <option value="2560x1440">2560x1440</option>
-              <option value="3440x1440">3440x1440</option>
-              <option value="3840x2160">3840x2160</option>
+              <option className="one" value="1920x1080" data-typeid="1">1920x1080</option>
+              <option className="two" value="2560x1080" data-typeid="2">2560x1080</option>
+              <option className="one" value="2560x1440" data-typeid="1">2560x1440</option>
+              <option className="two" value="3440x1440" data-typeid="2">3440x1440</option>
+              <option className="one" value="3840x2160" data-typeid="1">3840x2160</option>
             </select>
           </div>
           <div className="form-group">

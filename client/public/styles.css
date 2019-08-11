@@ -5,6 +5,44 @@ body,
   height: 100%;
   width: 100%;
 }
+h1 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.navbar {
+  background-color: #37c885 !important;
+}
+
+form{
+  padding: 20px;
+  background-color: #d8dadc;
+  box-shadow: 2px 2px 2px 2px black;
+  border-radius: 10px !important;
+}
+.nav-link {
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 2px;
+  margin: 2px;
+}
+.nav-link:hover {
+  background-color: #70cbb5;
+}
+table {
+  background-color: #fff;
+  box-shadow: 2px 2px 2px 2px black;
+  border-radius: 10px !important;
+}
+thead {
+  background-color: #848bd5;
+
+}
+.table td, .table th, .table tr{
+  border: none;
+}
+.App {
+  background: linear-gradient(45deg,#707cd1,#5acba6);
+}
 
 /* Photo by Marco Molitor on Unsplash */
 .home-cta {
